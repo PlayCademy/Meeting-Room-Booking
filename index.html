@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Playtopia Room Booking</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f7fa;
+    }
+
+    .tabs {
+        display: flex;
+        background: #0056d2;
+        padding: 10px 15px;
+        gap: 15px;
+    }
+
+    .tab {
+        color: white;
+        padding: 10px 16px;
+        cursor: pointer;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        transition: 0.2s;
+    }
+
+    .tab.active {
+        background: white;
+        color: #0056d2;
+        font-weight: bold;
+    }
+
+    iframe {
+        width: 100%;
+        border: none;
+        overflow: hidden !important;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- TAB MENU -->
+<div class="tabs">
+    <div class="tab active" data-src="https://airtable.com/app11cBO40oAO1xsX/shrynVaGo5USTHpvs">
+        Booking Calendar
+    </div>
+    <div class="tab" data-src="https://airtable.com/app11cBO40oAO1xsX/shreKq0a25EaDWioa">
+        Rooms
+    </div>
+</div>
+
+<!-- IFRAME -->
+<iframe id="airtableFrame"
+        src="https://airtable.com/app11cBO40oAO1xsX/shrynVaGo5USTHpvs">
+</iframe>
+
+<script>
+    const tabs = document.querySelectorAll(".tab");
+    const iframe = document.getElementById("airtableFrame");
+
+    // fungsi set tinggi iframe otomatis
+    function resizeIframe() {
+        // tinggi layar
+        const viewportHeight = window.innerHeight;
+
+        // set minimal tinggi iframe supaya panjang penuh
+        iframe.style.height = (viewportHeight + 320) + "px";
+        iframe.style.minHeight = (viewportHeight + 320) + "px";
+    }
+
+    // eksekusi saat load + tiap resize layar
+    window.onload = resizeIframe;
+    window.onresize = resizeIframe;
+
+    // ganti tab
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            iframe.src = tab.dataset.src;
+
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            // resize ulang setelah ganti halaman
+            setTimeout(resizeIframe, 400);
+        });
+    });
+</script>
+
+</body>
+</html>
