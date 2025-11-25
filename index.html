@@ -37,7 +37,7 @@
     iframe {
         width: 100%;
         border: none;
-        overflow: hidden !important;
+        height: 85vh; /* responsive */
     }
 </style>
 
@@ -46,47 +46,35 @@
 
 <!-- TAB MENU -->
 <div class="tabs">
-    <div class="tab active" data-src="https://airtable.com/app11cBO40oAO1xsX/shreLIrEzVCOmChQx">
+    <div class="tab active" 
+         data-src="https://airtable.com/embed/app11cBO40oAO1xsX/shreLIrEzVCOmChQx">
         Booking Calendar
     </div>
-    <div class="tab" data-src="https://airtable.com/app11cBO40oAO1xsX/shr3CmIAjNRh9ryYC">
+
+    <div class="tab" 
+         data-src="https://airtable.com/embed/app11cBO40oAO1xsX/shr3CmIAjNRh9ryYC">
         Rooms
     </div>
 </div>
 
 <!-- IFRAME -->
 <iframe id="airtableFrame"
-        src="https://airtable.com/app11cBO40oAO1xsX/shreLIrEzVCOmChQx">
+        src="https://airtable.com/embed/app11cBO40oAO1xsX/shreLIrEzVCOmChQx">
 </iframe>
 
 <script>
     const tabs = document.querySelectorAll(".tab");
     const iframe = document.getElementById("airtableFrame");
 
-    // fungsi set tinggi iframe otomatis
-    function resizeIframe() {
-        // tinggi layar
-        const viewportHeight = window.innerHeight;
-
-        // set minimal tinggi iframe supaya panjang penuh
-        iframe.style.height = (viewportHeight + 320) + "px";
-        iframe.style.minHeight = (viewportHeight + 320) + "px";
-    }
-
-    // eksekusi saat load + tiap resize layar
-    window.onload = resizeIframe;
-    window.onresize = resizeIframe;
-
-    // ganti tab
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
+
+            // Ubah iframe
             iframe.src = tab.dataset.src;
 
+            // Ubah tab active
             tabs.forEach(t => t.classList.remove("active"));
             tab.classList.add("active");
-
-            // resize ulang setelah ganti halaman
-            setTimeout(resizeIframe, 400);
         });
     });
 </script>
